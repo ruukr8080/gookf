@@ -1,0 +1,34 @@
+# docker-compose.yml
+version: '3.8'
+services:
+  # 메인 데이터베이스 서버
+  postgres:
+    image: postgres:15  # 최신 안정 버전의 postgres 사용
+    container_name: inventory-db  # 컨테이너 이름 지정
+    environment:  # 데이터베이스 초기 설정
+      POSTGRES_USER: postgres  # 기본 사용자 이름
+      POSTGRES_PASSWORD: sa  # 데이터베이스 비밀번호 (원하는 걸로 바꿔도 됨)
+      POSTGRES_DB: inventory_db  # 초기 데이터베이스 이름
+    ports:
+      - "5432:5432"  # 호스트:컨테이너 포트 매핑
+    volumes:  # 데이터 영구 저장을 위한 볼륨 설정
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped  # 컨테이너 자동 재시작
+
+  # 데이터베이스 관리 도구 (선택사항이지만 있으면 편함)
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: inventory-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ruukr8080@gmail.com  # pgAdmin 로그인 이메일
+      PGADMIN_DEFAULT_PASSWORD: kop156156++  # pgAdmin 로그인 비밀번호
+    ports:
+      - "5050:80"  # pgAdmin 웹 인터페이스 포트
+    depends_on:
+      - postgres  # postgres 컨테이너가 먼저 실행되도록 설정
+    restart: unless-stopped
+
+# 데이터 저장용 볼륨
+volumes:
+  postgres-data:
+    name: inventory-postgres-data  # 볼륨 이름 지정

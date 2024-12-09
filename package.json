@@ -9,7 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mikro-orm/cli": "^6.4.1",
+    "@mikro-orm/core": "^6.4.1",
+    "@mikro-orm/migrations": "^6.4.1",
+    "@mikro-orm/mysql": "^6.4.1",
+    "@mikro-orm/postgresql": "^6.4.1",
+    "@prisma/client": "^6.0.1",
     "next": "15.0.4",
+    "prisma": "^6.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

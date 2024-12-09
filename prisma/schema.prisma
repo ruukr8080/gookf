@@ -1,0 +1,35 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 상품 정보 모델
+model Product {
+  id        Int      @id @default(autoincrement())
+  maker     String   // 제조사
+  name      String   // 품목
+  price     Decimal  @db.Decimal(10, 2)  // postgres decimal type 씀 (돈계산 정확함)
+  quantity  Int      // 재고수량
+  logs      InventoryLog[] // 1:N 관계 설정 (한 상품에 여러 로그)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([name]) // 이름으로 검색 많이 할거같으니까 인덱스 걸어둠
+}
+
+// 재고 변동 로그
+model InventoryLog {
+  id        Int      @id @default(autoincrement())
+  product   Product  @relation(fields: [productId], references: [id])
+  productId Int
+  quantity  Int      // 변동수량
+  type      String   // 'hold' 또는 'reserve'
+  createdAt DateTime @default(now())
+
+  @@index([productId, createdAt]) // 로그 조회할때 쓸 복합 인덱스
+}
