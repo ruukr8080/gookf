@@ -8,7 +8,7 @@ export default function RootLayout({
     return (
         <html lang="en">
         <body>
-        <main className="grid-rows-2 min-h-screen min-w-screen bg-background p-5">
+        <main className="min-h-screen min-w-screen bg-background p-5">
             {children}
         </main>
         </body>

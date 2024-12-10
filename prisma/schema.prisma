@@ -14,7 +14,7 @@ model Product {
   maker     String   // 제조사
   name      String   // 품목
   price     Decimal  @db.Decimal(10, 2)  // postgres decimal type 씀 (돈계산 정확함)
-  quantity  Int      // 재고수량
+  quantity  Int      @default(0)// 재고수량
   logs      InventoryLog[] // 1:N 관계 설정 (한 상품에 여러 로그)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
